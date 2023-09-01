@@ -1,62 +1,62 @@
-import { Sequelize } from "sequelize";
-import db from "./db.js";
-import User from "./User.js";
+// import { Sequelize } from "sequelize";
+// import db from "./db.js";
+// import User from "./User.js";
 
-const Shift = db.define('turno', {
-  userId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-},
+// const Shift = db.define('turno', {
+//   userId: {
+//     type: Sequelize.INTEGER,
+//     allowNull: false,
+// },
   
-    id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        allowNull: false,
-        primaryKey: true,
-    },
-      data: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      operador: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      periodo: {
-        type: Sequelize.STRING,
-      },
-      maquina: {
-        type: Sequelize.STRING,
-      },
-      ge: {
-        type: Sequelize.STRING,
-      },
-      metaPorHora: {
-        type: Sequelize.STRING,
-      },
-      planejado: {
-        type: Sequelize.STRING,
-      },
-      produzido: {
-        type: Sequelize.STRING,
-      },
-      desperdicoCafe: {
-        type: Sequelize.STRING,
-      },
-      desperdicoEmbalagem: {
-        type: Sequelize.STRING,
-      },
-      qualidade: {
-        type: Sequelize.STRING,
-      },
-      she: {
-        type: Sequelize.STRING,
-      },
-});
+//     id: {
+//         type: Sequelize.INTEGER,
+//         autoIncrement: true,
+//         allowNull: false,
+//         primaryKey: true,
+//     },
+//       data: {
+//         type: Sequelize.STRING,
+//         allowNull: false,
+//       },
+//       operador: {
+//         type: Sequelize.STRING,
+//         allowNull: false,
+//       },
+//       periodo: {
+//         type: Sequelize.STRING,
+//       },
+//       maquina: {
+//         type: Sequelize.STRING,
+//       },
+//       ge: {
+//         type: Sequelize.STRING,
+//       },
+//       metaPorHora: {
+//         type: Sequelize.STRING,
+//       },
+//       planejado: {
+//         type: Sequelize.STRING,
+//       },
+//       produzido: {
+//         type: Sequelize.STRING,
+//       },
+//       desperdicoCafe: {
+//         type: Sequelize.STRING,
+//       },
+//       desperdicoEmbalagem: {
+//         type: Sequelize.STRING,
+//       },
+//       qualidade: {
+//         type: Sequelize.STRING,
+//       },
+//       she: {
+//         type: Sequelize.STRING,
+//       },
+// });
 
-// create a table in database
-// User.sync()
+// // create a table in database
+// // User.sync()
 
-Shift.belongsTo(User, { foreignKey: 'userId' });
+// Shift.belongsTo(User, { foreignKey: 'userId' });
 
-export default Shift;
+// export default Shift;
