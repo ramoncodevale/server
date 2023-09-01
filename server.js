@@ -16,8 +16,7 @@ app.use(cors());
 // Configuração para permitir o uso de imagens
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
-const RedisStore = connectRedis(session);
-const redisClient = Redis.createClient();
+const RedisStore = require("connect-redis").default
 
 app.use(session({
   store: new RedisStore({ client: redisClient }),
