@@ -2,6 +2,9 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import session from 'express-session';
+import Redis from 'redis';
+import connectRedis from 'connect-redis';
+
 
 const app = express();
 
@@ -13,12 +16,15 @@ app.use(cors());
 // Configuração para permitir o uso de imagens
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
+const RedisStore = connectRedis(session);
+const redisClient = Redis.createClient();
+
 app.use(session({
-  secret: 'abdbadba', // Substitua por uma chave secreta mais segura.
+  store: new RedisStore({ client: redisClient }),
+  secret: 'sua_chave_secreta',
   resave: false,
   saveUninitialized: true,
 }));
-
 
 // Rotas
 import loginRoutes from './src/routes/loginRoutes.js';
