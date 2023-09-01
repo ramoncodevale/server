@@ -2,9 +2,8 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 import session from 'express-session';
-import Redis from 'redis';
-import connectRedis from 'connect-redis';
-
+import RedisStore from "connect-redis"
+import {createClient} from "redis"
 
 const app = express();
 
@@ -16,14 +15,25 @@ app.use(cors());
 // Configuração para permitir o uso de imagens
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
-const RedisStore = require("connect-redis").default
+// Initialize client.
+let redisClient = createClient()
+redisClient.connect().catch(console.error)
 
-app.use(session({
-  store: new RedisStore({ client: redisClient }),
-  secret: 'sua_chave_secreta',
-  resave: false,
-  saveUninitialized: true,
-}));
+// Initialize store.
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
+
+// Initialize sesssion storage.
+app.use(
+  session({
+    store: redisStore,
+    resave: false, // required: force lightweight session keep alive (touch)
+    saveUninitialized: false, // recommended: only save session when data exists
+    secret: "keyboard cat",
+  })
+)
 
 // Rotas
 import loginRoutes from './src/routes/loginRoutes.js';
