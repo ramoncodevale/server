@@ -15,11 +15,12 @@ app.use(cors());
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
 
-app.use(session({
-  secret: 'abdbadba', // Substitua por uma chave secreta mais segura.
-  resave: false,
-  saveUninitialized: true,
-}));
+app.set('trust proxy', 1) // trust first proxy
+app.use( session({
+   secret : 's3Cur3',
+   name : 'sessionId',
+  })
+);
 
 
 // Rotas
