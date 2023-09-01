@@ -44,10 +44,6 @@ export const loginUser = async (req, res) => {
             });
         }
 
-        // Se a senha estiver correta
-        req.session.user = user; // Armazene o usuário na sessão
-
-
         return res.json({
             error: false,
             message: 'Usuário logado com sucesso!',

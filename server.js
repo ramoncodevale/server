@@ -1,7 +1,6 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import session from 'express-session';
 
 const app = express();
 
@@ -11,15 +10,6 @@ app.use(cors());
 // Configuração para permitir o uso de imagens
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
-
-app.use(
-  session({
-    store: new MySQLStore({ createDatabaseTable: true }, db),
-    secret: 'abdajd',
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 
 // Rotas
 import loginRoutes from './src/routes/loginRoutes.js';
