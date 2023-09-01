@@ -16,7 +16,11 @@ import loginRoutes from './src/routes/loginRoutes.js';
 
 app.use(express.json());
 app.use(loginRoutes);
-app.use(session({ secret: "abcde", resave: true, saveUninitialized: true }));
+app.use(session({
+  secret: 'abdajd', 
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.get('/', async (req, res) => {
   res.send("Deu certo")
