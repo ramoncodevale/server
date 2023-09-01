@@ -1,6 +1,7 @@
 import express from 'express';
 import path from "path"
 import cors from "cors";
+import session from "express-session";
 
 const app = express();
 
@@ -15,6 +16,7 @@ import loginRoutes from './src/routes/loginRoutes.js';
 
 app.use(express.json());
 app.use(loginRoutes);
+app.use(session({ secret: "abcde", resave: true, saveUninitialized: true }));
 
 app.get('/', async (req, res) => {
   res.send("Deu certo")

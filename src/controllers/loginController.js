@@ -26,6 +26,8 @@ export const loginUser = async (req, res) => {
         const user = await User.findOne({ 
             where: {email }});
 
+
+
         if (!user) {
             return res.status(401).json({
                 error: true,
@@ -33,15 +35,7 @@ export const loginUser = async (req, res) => {
             });
         }
 
-        // const passwordMatch = await bcrypt.compare(password, user.password);
-
-        // if (!passwordMatch) {
-        //     return res.status(401).json({
-        //         error: true,
-        //         message: 'Senha incorreta.',
-        //     });
-        // }
-
+        req.session.user = user; 
         return res.json({
             error: false,
             message: 'Usuário logado com sucesso!',
@@ -69,6 +63,9 @@ export const registerUser = async (req, res) => {
             email,
             password: hashedPassword,
         });
+
+
+        req.session.user = newUser;
 
         return res.json({
             error: false,

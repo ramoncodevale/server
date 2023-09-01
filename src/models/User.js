@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
+import Shift from "./Shift.js";
 
 const User = db.define('usuarios', {
     id: {
@@ -30,6 +31,8 @@ const User = db.define('usuarios', {
         allowNull: false
     },
 });
+
+User.hasMany(Shift, { foreignKey: 'userId' });
 
 // create a table in database
 // User.sync()
