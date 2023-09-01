@@ -35,21 +35,11 @@ export const loginUser = async (req, res) => {
             });
         }
 
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-if (passwordMatch) {
-    req.session.user = user.email; 
-    return res.status(200).json({
-        error: false,
-        message: 'usuario logado com sucesso',
-    });
-} else {
-    return res.status(401).json({
-        error: true,
-        message: 'erro ao logar usuário',
-    });
-}
-
+        return res.json({
+            error: false,
+            message: 'Usuário logado com sucesso!',
+            data: user,
+        });
     } catch (error) {
         console.error('Erro ao logar o usuário:', error);
         return res.status(500).json({
@@ -72,9 +62,7 @@ export const registerUser = async (req, res) => {
             email,
             password: hashedPassword,
         });
-
-
-        req.session.user = newUser;
+        
 
         return res.json({
             error: false,
