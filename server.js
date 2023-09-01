@@ -1,14 +1,23 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import session from 'express-session';
 
 const app = express();
+
+
 
 // Configuração do CORS
 app.use(cors());
 
 // Configuração para permitir o uso de imagens
 app.use(express.static(new URL('public', import.meta.url).pathname));
+
+app.use(session({
+  secret: 'abdbadba', // Substitua por uma chave secreta mais segura.
+  resave: false,
+  saveUninitialized: true,
+}));
 
 
 // Rotas

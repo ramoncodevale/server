@@ -9,11 +9,5 @@ const sequelize = new Sequelize({
     host: process.env.DB_HOST,
 })
 
-// sequelize.authenticate()
-// .then(() => {
-//     console.log("database connected successfully")
-// }).catch((error) => {
-//     console.log(error)
-// })
 
 export default sequelize;

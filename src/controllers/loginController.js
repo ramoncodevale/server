@@ -44,11 +44,15 @@ export const loginUser = async (req, res) => {
             });
         }
 
+
+        req.session.user = user
+
         return res.json({
             error: false,
             message: 'Usuário logado com sucesso!',
             data: user,
         });
+
     } catch (error) {
         console.error('Erro ao logar o usuário:', error);
         return res.status(500).json({
