@@ -45,6 +45,7 @@ export const loginUser = async (req, res) => {
         }
 
 
+        req.session.user = user
 
         return res.json({
             error: false,
