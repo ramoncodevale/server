@@ -17,18 +17,19 @@ app.use(express.static(new URL('public', import.meta.url).pathname));
 const RedisStore = connectRedis(session);
 const redisClient = redis.createClient();
 
-// Rotas
-import loginRoutes from './src/routes/loginRoutes.js';
-
-app.use(express.json());
-app.use(loginRoutes);
-
 app.use(session({
   store: new RedisStore({ client: redisClient }),
   secret: 'abdajd', 
   resave: false,
   saveUninitialized: true,
 }));
+
+// Rotas
+import loginRoutes from './src/routes/loginRoutes.js';
+
+app.use(express.json());
+app.use(loginRoutes);
+
 
 app.get('/', async (req, res) => {
   res.send("Deu certo")
