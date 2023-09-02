@@ -92,17 +92,4 @@ export const registerUser = async (req, res) => {
 };
 
 
-
-User.prototype.getOperatorName = async function () {
-    // Consulta ao banco de dados para buscar o nome do operador com base no userId
-    const user = await User.findByPk(this.usuarioId);
-  
-    if (!user) {
-      // Trate o caso em que o usuário não é encontrado
-      return null;
-    }
-  
-    return `${user.name} ${user.surname}`; // Assumindo que o nome e o sobrenome estão nas colunas correspondentes
-  };
- 
   
