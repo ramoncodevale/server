@@ -15,13 +15,15 @@ app.use(cors());
 app.use(express.static(new URL('public', import.meta.url).pathname));
 
 
-app.set('trust proxy', 1) // trust first proxy
-app.use( session({
-   secret : 's3Cur3',
-   name : 'sessionId',
-  })
-);
-
+app.use(session({
+  name : 'codeil',
+  secret : 'something',
+  resave :false,
+  saveUninitialized: true,
+  cookie : {
+          maxAge:(1000 * 60 * 100)
+  }      
+}));
 
 // Rotas
 import loginRoutes from './src/routes/loginRoutes.js';
