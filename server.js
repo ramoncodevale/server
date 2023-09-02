@@ -24,7 +24,8 @@ app.use(function (req, res, next) {
   next() // otherwise continue
 });
 
-app.use(cors());
+// Configurando o middleware cors para permitir acesso de qualquer origem
+app.use(cors({ origin: '*' }));
 
 // Configuration to allow the use of images
 app.use(express.static(new URL('public', import.meta.url).pathname));
