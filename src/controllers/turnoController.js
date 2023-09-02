@@ -25,7 +25,7 @@ export const createShift = async (req, res) => {
     const { periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
-        const usuarioId = req.session.user.id;
+        const usuarioId = req.session.user;
 
         // Consulte o banco de dados para buscar o nome do operador com base no userId
         const user = await User.findByPk(usuarioId);
