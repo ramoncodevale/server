@@ -3,7 +3,7 @@ import db from "./db.js";
 import User from "./User.js";
 
 const Shift = db.define('turno', {
-  userId: {
+  usuarioId: {
     type: Sequelize.INTEGER,
     allowNull: false,
 },
@@ -54,7 +54,7 @@ const Shift = db.define('turno', {
 // // create a table in database
 // Shift.sync()
 
-User.hasMany(Shift, { foreignKey: 'userId' });
-Shift.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Shift, { foreignKey: 'usuarioId' });
+Shift.belongsTo(User, { foreignKey: 'usuarioId' });
 
 export default Shift;
