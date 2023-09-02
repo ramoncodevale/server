@@ -10,11 +10,11 @@ app.set('trust proxy', 1);
 app.use(session({
   cookie: {
     secure: true,
-    maxAge: 60000
+    maxAge: 86400000, // 24 horas em milissegundos
   },
   secret: 'secret',
   saveUninitialized: true,
-  resave: false
+  resave: false,
 }));
 
 app.use(function (req, res, next) {
