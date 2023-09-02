@@ -24,8 +24,13 @@ app.use(function (req, res, next) {
   next() // otherwise continue
 });
 
-// Configuration for CORS
-app.use(cors());
+const corsOptions = {
+  origin: 'http://localhost:5173/', // Substitua pelo URL do seu aplicativo React
+  credentials: true, // Permitir o envio de cookies ou cabeçalhos de autenticação
+};
+
+app.use(cors(corsOptions));
+
 
 // Configuration to allow the use of images
 app.use(express.static(new URL('public', import.meta.url).pathname));
