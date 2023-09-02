@@ -1,31 +1,36 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import session from 'express-session';
-
+import session from 'cookie-session';
 
 const app = express();
 
-
-
-// Configuração do CORS
-app.use(cors());
-
-// Configuração para permitir o uso de imagens
-app.use(express.static(new URL('public', import.meta.url).pathname));
-
+app.set('trust proxy', 1);
 
 app.use(session({
-  name : 'codeil',
-  secret : 'something',
-  resave :false,
+  cookie: {
+    secure: true,
+    maxAge: 60000
+  },
+  secret: 'secret',
   saveUninitialized: true,
-  cookie : {
-          maxAge:(1000 * 60 * 100)
-  }      
+  resave: false
 }));
 
-// Rotas
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('Oh no')) // handle error
+  }
+  next() // otherwise continue
+});
+
+// Configuration for CORS
+app.use(cors());
+
+// Configuration to allow the use of images
+app.use(express.static(new URL('public', import.meta.url).pathname));
+
+// Routes
 import loginRoutes from './src/routes/loginRoutes.js';
 
 app.use(express.json());
