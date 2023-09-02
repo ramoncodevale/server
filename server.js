@@ -32,9 +32,11 @@ app.use(express.static(new URL('public', import.meta.url).pathname));
 
 // Routes
 import loginRoutes from './src/routes/loginRoutes.js';
+import turnoRoutes from './src/routes/turnoRoutes.js';
 
 app.use(express.json());
 app.use(loginRoutes);
+app.use(turnoRoutes);
 
 app.get('/', async (req, res) => {
   res.send('Deu certo');

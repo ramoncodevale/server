@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
-// import User from "./User.js";
+import User from "./User.js";
 
 const Shift = db.define('turno', {
   userId: {
