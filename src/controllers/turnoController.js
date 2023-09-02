@@ -1,12 +1,24 @@
 import Shift from '../models/Shift.js';
 
 export const createShift = async (req, res) => {
-    const { usuarioId, operador, periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    const { periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
+        const usuarioId = req.session.user.id;
+
+        // Use o método getOperatorName para buscar o nome do operador
+        const operatorName = await req.session.user.getOperatorName();
+
+        if (!operatorName) {
+            return res.status(404).json({
+                error: true,
+                message: 'Operador não encontrado.',
+            });
+        }
+
         const newShift = await Shift.create({
             usuarioId,
-            operador,
+            operador: operatorName, 
             periodo,
             maquina,
             ge,
