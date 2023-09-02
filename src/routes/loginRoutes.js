@@ -1,11 +1,15 @@
 import express from 'express';
-import { loginUser, registerUser } from '../controllers/loginController.js';
+// import { listUser, createUser, updateUser, deleteUser } from '../controllers/userController.js';
 
-const router = express.Router();
+import { listUsers, loginUser,registerUser } from '../controllers/loginController.js';
 
+const router = express();
+
+
+router.get('/listar', listUsers);
 router.post('/login', loginUser);
-
-// Rota para registro de usuário
 router.post('/cadastrar-usuario', registerUser);
+// router.put('/atualizar-usuario/:id', updateUser);
+// router.delete('/deletar-usuario/:id', deleteUser);
 
 export default router;

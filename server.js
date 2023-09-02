@@ -1,38 +1,48 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import jwt from 'jsonwebtoken'; // Importe o módulo jwt aqui
+import session from 'cookie-session';
 
 const app = express();
-// ...
 
-// Middleware para verificar o token JWT
-function verifyToken(req, res, next) {
-  const token = req.headers['authorization'];
+app.set('trust proxy', 1);
 
-  if (!token) {
-    return res.status(403).json({ error: 'Token não fornecido' });
+app.use(session({
+  cookie: {
+    secure: true,
+    maxAge: 60000
+  },
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: false
+}));
+
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('Oh no')) // handle error
   }
+  next() // otherwise continue
+});
 
-  jwt.verify(token, JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).json({ error: 'Token inválido' });
-    }
+app.use(cors());
 
-    req.user = decoded;
-    next();
-  });
-}
+// Configuration to allow the use of images
+app.use(express.static(new URL('public', import.meta.url).pathname));
 
-// Use o middleware de verificação do token em rotas que exigem autenticação
-app.use('/protected', verifyToken);
-
-// ...
-
-// Rotas
+// Routes
 import loginRoutes from './src/routes/loginRoutes.js';
 import turnoRoutes from './src/routes/turnoRoutes.js';
 
 app.use(express.json());
 app.use(loginRoutes);
 app.use(turnoRoutes);
+
+app.get('/', async (req, res) => {
+  res.send('Deu certo');
+});
+
+const PORT = 8080;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT} http://localhost:${PORT}`);
+});
