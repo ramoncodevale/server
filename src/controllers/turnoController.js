@@ -1,32 +1,28 @@
 import Shift from '../models/Shift.js';
-
 import User from '../models/User.js';
+import { authenticateJWT } from '../middleware/authMiddleware.js'; // Importe o middleware de autenticação JWT
 
-export const listShift = async (req,res) => {
+export const listShift = async (req, res) => {
     try {
-    const turno = await Shift.findAll({})
-    return res.json({
-        error: false,
-        message: 'Turno listado',
-        data: turno,
-    });
-    } 
- catch (error) {
-    console.error('Erro ao listar o turno', error);
-    return res.status(500).json({
-        error: true,
-        message: 'Erro ao listar o turno',
-    });
-}
-}
-
+        const turno = await Shift.findAll({});
+        return res.json({
+            error: false,
+            message: 'Turno listado',
+            data: turno,
+        });
+    } catch (error) {
+        console.error('Erro ao listar o turno', error);
+        return res.status(500).json({
+            error: true,
+            message: 'Erro ao listar o turno',
+        });
+    }
+};
 
 export const createShift = async (req, res) => {
     const { periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
-        const usuarioId = req.session.user;
-
         // Consulte o banco de dados para buscar o nome do operador com base no userId
         const user = await User.findByPk(usuarioId);
 
@@ -67,3 +63,6 @@ export const createShift = async (req, res) => {
         });
     }
 };
+
+// Proteja a rota de criação de turno com autenticação JWT
+export const createShiftWithAuth = [authenticateJWT, createShift];
