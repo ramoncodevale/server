@@ -1,13 +1,13 @@
 import express from 'express';
 
-import { listShift, createShiftWithAuth  } from '../controllers/turnoController.js';
+import { listShift, createShift } from '../controllers/turnoController.js';
 
 const router = express();
 
 
 
 router.get('/listar-turno', listShift);
-router.post('/cadastrar-turno', createShiftWithAuth); 
+router.post('/cadastrar-turno', createShift); 
 
 
 export default router;
