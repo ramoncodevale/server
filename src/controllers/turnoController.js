@@ -55,4 +55,3 @@ export const createShift = async (req, res) => {
     }
 };
 // Proteja a rota de criação de turno com autenticação JWT
-export const createShiftWithAuth = [authenticateJWT, createShift];
