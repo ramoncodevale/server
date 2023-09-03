@@ -21,7 +21,7 @@ export const listShift = async (req, res) => {
 
 export const createShift = async (req, res) => {
     // Obtenha o ID do usuário autenticado a partir do objeto req.user
-    const { operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    const { usuarioId, operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
       
