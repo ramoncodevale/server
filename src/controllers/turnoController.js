@@ -20,12 +20,14 @@ export const listShift = async (req, res) => {
 };
 
 export const createShift = async (req, res) => {
-    const {  operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    // Obtenha o ID do usuário autenticado a partir do objeto req.user
+    const usuarioId = req.user.id;
+    const { operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
       
         const newShift = await Shift.create({
-            
+            usuarioId,
             operador, 
             periodo,
             horario,
@@ -53,6 +55,5 @@ export const createShift = async (req, res) => {
         });
     }
 };
-
 // Proteja a rota de criação de turno com autenticação JWT
 export const createShiftWithAuth = [authenticateJWT, createShift];
