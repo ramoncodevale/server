@@ -2,7 +2,7 @@ import { Sequelize } from "sequelize";
 import db from "./db.js";
 import User from "./User.js";
 
-const Shift = db.define('turno', {
+const Shift = db.define('turnos', {
   usuarioId: {
     type: Sequelize.INTEGER,
     allowNull: false,
