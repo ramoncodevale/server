@@ -1,15 +1,19 @@
 import express from 'express';
-// import { listUser, createUser, updateUser, deleteUser } from '../controllers/userController.js';
+import { registerUser, loginUser } from "../controllers/loginController.js"
+import { authenticateJWT } from '../middleware/authMiddleware.js';
 
-import { listUsers, loginUser,registerUser } from '../controllers/loginController.js';
+const router = express.Router();
 
-const router = express();
+// Rota pública que permite o registro de um usuário
+router.post('/register', registerUser);
 
-
-router.get('/listar', listUsers);
+// Rota pública que permite o login de um usuário e gera um token JWT
 router.post('/login', loginUser);
-router.post('/cadastrar-usuario', registerUser);
-// router.put('/atualizar-usuario/:id', updateUser);
-// router.delete('/deletar-usuario/:id', deleteUser);
+
+// Rota protegida que requer autenticação JWT
+router.get('/protected-route', authenticateJWT, (req, res) => {
+    // Você pode acessar o usuário autenticado usando req.user aqui
+    res.json({ message: 'Rota protegida acessada com sucesso!', user: req.user });
+});
 
 export default router;

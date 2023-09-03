@@ -1,14 +1,20 @@
-// authMiddleware.js
+import jwt from 'jsonwebtoken';
 
-export const isAuthenticated = (req, res, next) => {
-  if (req.session.user) {
-    // O usuário está autenticado, continue com a solicitação
-    next();
-  } else {
-    // O usuário não está autenticado, retorne um erro ou redirecione para a página de login
-    res.status(401).json({
-      error: true,
-      message: 'Você precisa estar autenticado para acessar esta página.',
+export const authenticateJWT = (req, res, next) => {
+    const token = req.header('Authorization');
+
+    if (!token) {
+        return res.status(401).json({ error: true, message: 'Token não fornecido.' });
+    }
+
+    jwt.verify(token, 'suaChaveSecreta', (err, decoded) => {
+        if (err) {
+            return res.status(403).json({ error: true, message: 'Falha na autenticação do token.' });
+        }
+
+        // O token é válido, você pode acessar os dados do usuário decodificados
+        req.user = decoded;
+
+        next(); // Continue com a próxima função de middleware ou rota
     });
-  }
 };

@@ -1,28 +1,9 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import session from 'cookie-session';
 
 const app = express();
 
-app.set('trust proxy', 1);
-
-app.use(session({
-  cookie: {
-    secure: true,
-    maxAge: 86400000, // 24 horas em milissegundos
-  },
-  secret: 'secret',
-  saveUninitialized: true,
-  resave: false,
-}));
-
-app.use(function (req, res, next) {
-  if (!req.session) {
-    return next(new Error('Oh no')) // handle error
-  }
-  next() // otherwise continue
-});
 
 // Configurando o middleware cors para permitir acesso de qualquer origem
 app.use(cors({ origin: '*' }));

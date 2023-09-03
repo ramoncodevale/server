@@ -1,13 +1,13 @@
 import express from 'express';
 
 import { listShift, createShift } from '../controllers/turnoController.js';
-import { isAuthenticated } from '../middleware/authMiddleware.js';
+import { authenticateJWT } from '../middleware/authMiddleware.js';
 
 const router = express();
 
 
-router.get('/listar-turno', isAuthenticated, listShift)
-router.post('/cadastrar-turno', isAuthenticated, createShift)
+router.get('/listar-turno', authenticateJWT, listShift)
+router.post('/cadastrar-turno', authenticateJWT, createShift)
 
 
 export default router;
