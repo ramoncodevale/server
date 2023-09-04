@@ -5,7 +5,7 @@ import User from "./User.js";
 const Shift = db.define('turnos', {
   usuarioId: {
     type: Sequelize.INTEGER,
-    // allowNull: false,
+    allowNull: false,
 },
   
     id: {
