@@ -27,17 +27,6 @@ export const createShift = async (req, res) => {
     try {
         const usuarioId = req.session.user;
 
-        // Consulte o banco de dados para buscar o nome do operador com base no userId
-        const user = await User.findByPk(usuarioId);
-
-        if (!user) {
-            return res.status(404).json({
-                error: true,
-                message: 'Operador não encontrado.',
-            });
-        }
-
-
         const newShift = await Shift.create({
             usuarioId,
             operador, // Preencha o campo "operador" com o nome do operador
