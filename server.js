@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import session from 'express';
+import session from 'express-session';
 
 const app = express();
 
