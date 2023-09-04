@@ -22,18 +22,9 @@ export const listShift = async (req,res) => {
 
 
 export const createShift = async (req, res) => {
-    const { periodo, maquina, ge, operador, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    const { periodo, maquina, ge, operador, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she, usuarioId } = req.body;
 
     try {
-        // Verifique se o operador (usuário) existe antes de criar o turno
-        const existingUser = await User.findByPk(operador);
-
-        if (!existingUser) {
-            return res.status(400).json({
-                error: true,
-                message: 'Operador (usuário) não encontrado.',
-            });
-        }
 
         const newShift = await Shift.create({
             operador,
@@ -47,6 +38,7 @@ export const createShift = async (req, res) => {
             desperdicoEmbalagem,
             qualidade,
             she,
+            usuarioId
         });
 
         return res.json({
