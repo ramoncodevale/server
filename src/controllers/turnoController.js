@@ -62,3 +62,19 @@ export async function cadastrarMaquina(req, res) {
     res.status(500).json({ error: 'Erro ao cadastrar a máquina.' });
   }
 }
+
+export async function cadastrarPeriodo(req, res) {
+  try {
+    const { turno } = req.body; // Supondo que você recebe os dados do operador no corpo da requisição
+
+    // Crie um novo operador no banco de dados
+    const periodo = await Period.create({
+      turno
+    });
+
+    res.status(201).json(periodo); // Retorna o operador criado com status 201 (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao cadastrar periodo' });
+  }
+}
