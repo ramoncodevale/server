@@ -26,6 +26,7 @@ export const createShift = async (req, res) => {
 
     try {
 
+        const userIdFromSession = req.session.usuarioId; 
         const newShift = await Shift.create({
             operador,
             periodo,
@@ -38,7 +39,7 @@ export const createShift = async (req, res) => {
             desperdicoEmbalagem,
             qualidade,
             she,
-            usuarioId
+            usuarioId: userIdFromSession
         });
 
         return res.json({
