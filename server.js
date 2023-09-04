@@ -13,13 +13,6 @@ app.use(session({
   resave: false
 }));
 
-app.use(function (req, res, next) {
-  if (!req.session) {
-    return next(new Error('Oh no')) // handle error
-  }
-  next() // otherwise continue
-});
-
 app.use(cors());
 
 // Configuration to allow the use of images
