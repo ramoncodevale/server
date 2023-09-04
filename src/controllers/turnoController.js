@@ -25,10 +25,8 @@ export const createShift = async (req, res) => {
     const { periodo, maquina, ge, operador, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
-        const usuarioId = req.session.user;
 
         const newShift = await Shift.create({
-            usuarioId,
             operador, // Preencha o campo "operador" com o nome do operador
             periodo,
             maquina,
