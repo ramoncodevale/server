@@ -6,8 +6,12 @@ const Shift = db.define('turnos', {
   usuarioId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-},
-  
+    references: {
+      model: User,
+      key: 'id',
+    },
+  },
+
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -51,10 +55,11 @@ const Shift = db.define('turnos', {
       },
 });
 
+
+Shift.belongsTo(User, { foreignKey: 'usuarioId' });
+User.hasMany(Shift, { foreignKey: 'usuarioId' });
+
+
 // // create a table in database
 // Shift.sync()
-
-User.hasMany(Shift, { foreignKey: 'usuarioId' });
-Shift.belongsTo(User, { foreignKey: 'usuarioId' });
-
 export default Shift;
