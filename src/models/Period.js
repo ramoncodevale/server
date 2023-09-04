@@ -11,6 +11,8 @@ const Period = db.define('periodos', {
       turno: {
         type: Sequelize.STRING,
       },    
+},{
+  timestamps: false, // Esta opção remove os campos de timestamps
 });
 
 

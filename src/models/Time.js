@@ -11,6 +11,8 @@ const Time= db.define('Horario', {
   faixa: {
     type: Sequelize.STRING,
   },
+},  {
+  timestamps: false, // Esta opção remove os campos de timestamps
 });
 
 // Time.sync()

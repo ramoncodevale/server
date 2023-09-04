@@ -45,5 +45,20 @@ export async function cadastrarOperador(req, res) {
   }
 }
 
+// Controller para cadastrar um operador
+export async function cadastrarMaquina(req, res) {
+  try {
+    const { nome, metaHora} = req.body; // Supondo que você recebe os dados do operador no corpo da requisição
 
+    // Crie um novo operador no banco de dados
+    const maquina = await Machine.create({
+      nome,
+      metaHora,
+    });
 
+    res.status(201).json(maquina); // Retorna o operador criado com status 201 (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao cadastrar a máquina.' });
+  }
+}

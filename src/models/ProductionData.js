@@ -34,6 +34,8 @@ const ProductionData = db.define('registroProducao', {
   desperdicioCafe: {
     type: Sequelize.INTEGER,
   },
+},  {
+  timestamps: false, // Esta opção remove os campos de timestamps
 });
 
 // Defina as relações entre os modelos
