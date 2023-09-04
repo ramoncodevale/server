@@ -63,6 +63,20 @@ export async function cadastrarMaquina(req, res) {
   }
 }
 
+export async function listarMaquina(req, res) {
+  try {
+    
+
+    // Crie um novo operador no banco de dados
+    const maquina = await Machine.findAll({});
+
+    res.status(201).json(maquina); // Retorna o operador criado com status 201 (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao listar as máquinas.' });
+  }
+}
+
 export async function cadastrarPeriodo(req, res) {
   try {
     const { turno } = req.body; // Supondo que você recebe os dados do operador no corpo da requisição
