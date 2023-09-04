@@ -1,12 +1,30 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
+import session from 'cookie-session';
 
 const app = express();
 
+app.set('trust proxy', 1);
 
-// Configurando o middleware cors para permitir acesso de qualquer origem
-app.use(cors({ origin: '*' }));
+app.use(session({
+  cookie: {
+    secure: true,
+    maxAge: 60000
+  },
+  secret: 'secret',
+  saveUninitialized: true,
+  resave: false
+}));
+
+app.use(function (req, res, next) {
+  if (!req.session) {
+    return next(new Error('Oh no')) // handle error
+  }
+  next() // otherwise continue
+});
+
+app.use(cors());
 
 // Configuration to allow the use of images
 app.use(express.static(new URL('public', import.meta.url).pathname));

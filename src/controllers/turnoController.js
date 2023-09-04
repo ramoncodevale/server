@@ -1,47 +1,47 @@
 import Shift from '../models/Shift.js';
-import User from '../models/User.js';
-import { authenticateJWT } from '../middleware/authMiddleware.js'; // Importe o middleware de autenticação JWT
 
-export const listShift = async (req, res) => {
+import User from '../models/User.js';
+
+export const listShift = async (req,res) => {
     try {
-        const turno = await Shift.findAll({});
-        return res.json({
-            error: false,
-            message: 'Turno listado',
-            data: turno,
-        });
-    } catch (error) {
-        console.error('Erro ao listar o turno', error);
-        return res.status(500).json({
-            error: true,
-            message: 'Erro ao listar o turno',
-        });
-    }
-};
+    const turno = await Shift.findAll({})
+    return res.json({
+        error: false,
+        message: 'Turno listado',
+        data: turno,
+    });
+    } 
+ catch (error) {
+    console.error('Erro ao listar o turno', error);
+    return res.status(500).json({
+        error: true,
+        message: 'Erro ao listar o turno',
+    });
+}
+}
 
 
 export const createShift = async (req, res) => {
-    // Verifique se o campo "usuarioId" está presente no corpo da solicitação
-    // if (!req.body.usuarioId) {
-    //     return res.status(400).json({
-    //         error: true,
-    //         message: 'Campo "usuarioId" é obrigatório.',
-    //     });
-    // }
-
-    // Obtenha o ID do usuário autenticado a partir do objeto req.user
-
-    const usuarioId = req.user
-    // const usuarioId = req.user.id
-    const { operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
-
+    const { periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
+        const usuarioId = req.session.user;
+
+        // Consulte o banco de dados para buscar o nome do operador com base no userId
+        const user = await User.findByPk(usuarioId);
+
+        if (!user) {
+            return res.status(404).json({
+                error: true,
+                message: 'Operador não encontrado.',
+            });
+        }
+
+
         const newShift = await Shift.create({
             usuarioId,
-            operador, 
+            operador, // Preencha o campo "operador" com o nome do operador
             periodo,
-            horario,
             maquina,
             ge,
             metaPorHora,
@@ -66,4 +66,3 @@ export const createShift = async (req, res) => {
         });
     }
 };
-
