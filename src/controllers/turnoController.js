@@ -30,11 +30,10 @@ export const createShift = async (req, res) => {
     }
 
     // Obtenha o ID do usuário autenticado a partir do objeto req.user
-    const { usuarioId, operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    const { operador, periodo, horario, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
         const newShift = await Shift.create({
-            usuarioId, // Use o valor fornecido no corpo da solicitação
             operador, 
             periodo,
             horario,
