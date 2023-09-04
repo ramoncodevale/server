@@ -9,7 +9,7 @@ const Time= db.define('Horario', {
     primaryKey: true,
   },
   faixa: {
-    type: DataTypes.STRING,
+    type: Sequelize.STRING,
   },
 });
 

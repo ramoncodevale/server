@@ -9,7 +9,7 @@ const Period = db.define('periodos', {
         primaryKey: true,
     },
       turno: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },    
 });
 
