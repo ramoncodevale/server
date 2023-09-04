@@ -1,17 +1,13 @@
 import express from 'express';
 import path from 'path';
 import cors from 'cors';
-import session from 'cookie-session';
+import session from 'express';
 
 const app = express();
 
 app.set('trust proxy', 1);
 
 app.use(session({
-  cookie: {
-    secure: true,
-    maxAge: 60000
-  },
   secret: 'secret',
   saveUninitialized: true,
   resave: false
