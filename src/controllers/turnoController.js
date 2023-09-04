@@ -45,6 +45,19 @@ export async function cadastrarOperador(req, res) {
   }
 }
 
+export async function listarOperador(req, res) {
+  try {
+    
+    const operador = await Operator.findAll({});
+
+    res.status(201).json(operador); // Retorna o operador criado com status 201 (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao listar os operadores.' });
+  }
+}
+
+
 // Controller para cadastrar um operador
 export async function cadastrarMaquina(req, res) {
   try {
@@ -65,8 +78,6 @@ export async function cadastrarMaquina(req, res) {
 
 export async function listarMaquina(req, res) {
   try {
-    
-
     // Crie um novo operador no banco de dados
     const maquina = await Machine.findAll({});
 
@@ -90,5 +101,17 @@ export async function cadastrarPeriodo(req, res) {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Erro ao cadastrar periodo' });
+  }
+}
+
+export async function listarPeriodo(req, res) {
+  try {
+    
+    const periodo = await Period.findAll({});
+
+    res.status(201).json(periodo); // Retorna o operador criado com status 201 (Created)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao listar os periodos.' });
   }
 }
