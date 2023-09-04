@@ -6,10 +6,6 @@ const Shift = db.define('turnos', {
   usuarioId: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    references: {
-      model: User,
-      key: 'id',
-    },
   },
 
     id: {

@@ -30,6 +30,8 @@ export const createShift = async (req, res) => {
     try {
 
         const userIdFromSession = req.session.usuarioId; 
+        console.log('userIdFromSession:', userIdFromSession);
+
         const newShift = await Shift.create({
             operador,
             periodo,
