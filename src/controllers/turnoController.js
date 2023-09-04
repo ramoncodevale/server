@@ -22,7 +22,7 @@ export const listShift = async (req,res) => {
 
 
 export const createShift = async (req, res) => {
-    const { periodo, maquina, ge, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
+    const { periodo, maquina, ge, operador, metaPorHora, planejado, produzido, desperdicoCafe, desperdicoEmbalagem, qualidade, she } = req.body;
 
     try {
         const usuarioId = req.session.user;
