@@ -6,7 +6,7 @@ import Machine from "./Machine.js";
 import Operator from "./Operator.js";
 import Production from "./Production.js";
 
-const ProductionData = db.define('registroProducao', {
+const ProductionData = db.define('registroProducaos', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
