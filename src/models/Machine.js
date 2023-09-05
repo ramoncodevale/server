@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
+import ProductionData from "./ProductionData.js";
 
 
 const Machine = db.define('maquinas', {
