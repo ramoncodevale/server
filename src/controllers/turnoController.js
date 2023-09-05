@@ -69,11 +69,11 @@ export async function listarRegistrosProducao(req, res) {
 export async function saveProductionData(req, res) {
   try {
     // Obtenha os dados do corpo da solicitação HTTP
-    const { periodoId, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId, producoes } = req.body;
+    const { periodoId, data, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId } = req.body;
 
-    // Crie um novo registro de ProductionData no banco de dados
     const newProductionData = await ProductionData.create({
       periodoId,
+      data,
       ger,
       planejado,
       produzido,
@@ -81,42 +81,17 @@ export async function saveProductionData(req, res) {
       she,
       desperdicioEmbalagem,
       desperdicioCafe,
+      comentario,
+      metaHora,
+      produzido,
       operadorId,
       maquinaId,
     });
 
-    // Crie registros de Production associados, se necessário
-    if (producoes && producoes.length > 0) {
-      await newProductionData.createProductions(producoes);
-    }
 
     // Envie uma resposta de sucesso
-    res.status(201).json({ message: "Dados de produção salvos com sucesso" });
+    res.status(201).json(newProductionData);
   } catch (error) {
-    // Trate os erros adequadamente
-    console.error(error);
-    res.status(500).json({ error: "Erro ao salvar os dados de produção" });
-  }
-}
-
-
-
-export async function cadastrarProducoes(req, res) {
-  try {
-    const { perda, comentario, quantidade, operadorId, metaHora } = req.body;
-
-    // Crie um novo registro de ProductionData no banco de dados
-    const newProductionData = await Production.create({
-      perda,
-      operadorId,
-      comentario,
-      quantidade,
-      metaHora
-    });
-
-    // Envie uma resposta de sucesso
-    res.status(201).json(newProductionData); 
-    }  catch (error) {
     // Trate os erros adequadamente
     console.error(error);
     res.status(500).json({ error: "Erro ao salvar os dados de produção" });

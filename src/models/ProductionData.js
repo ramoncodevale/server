@@ -4,7 +4,6 @@ import db from "./db.js";
 import Period from "./Period.js";
 import Machine from "./Machine.js";
 import Operator from "./Operator.js";
-import Production from "./Production.js";
 
 const ProductionData = db.define('registroProducaos', {
   id: {
@@ -15,6 +14,9 @@ const ProductionData = db.define('registroProducaos', {
   },
   ger: {
     type: Sequelize.INTEGER,
+  },
+  data: {
+    type: Sequelize.STRING,
   },
   planejado: {
     type: Sequelize.INTEGER,
@@ -42,7 +44,6 @@ const ProductionData = db.define('registroProducaos', {
 ProductionData.belongsTo(Operator, { foreignKey: 'operadorId' });
 ProductionData.belongsTo(Machine, { foreignKey: 'maquinaId' });
 ProductionData.belongsTo(Period, { foreignKey: 'periodoId' });
-ProductionData.hasMany(Production, { foreignKey: 'registroProducaoId' });
 
 // ProductionData.sync()
 
