@@ -115,7 +115,8 @@ export async function cadastrarProducoes(req, res) {
     });
 
     // Envie uma resposta de sucesso
-    res.status(201).json(newProductionData); // Retorna o operador criado com status 201 (Created)  } catch (error) {
+    res.status(201).json(newProductionData); 
+    }  catch (error) {
     // Trate os erros adequadamente
     console.error(error);
     res.status(500).json({ error: "Erro ao salvar os dados de produção" });
