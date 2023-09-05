@@ -20,9 +20,6 @@ const Machine = db.define('maquinas', {
   timestamps: false, // Esta opção remove os campos de timestamps
 });
 
-Machine.hasMany(ProductionData, {
-  foreignKey: 'maquinaId',
-  as: 'productions', // Opcional: um alias para a associação
-});
+
 
 export default Machine;

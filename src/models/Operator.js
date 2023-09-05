@@ -21,10 +21,7 @@ const Operator = db.define('operadores', {
   
 });
 
-Operator.hasMany(ProductionData, {
-  foreignKey: 'operadorId', // O nome do campo na tabela ProductionData que faz referência ao operador
-  as: 'productions', // Opcional: um alias para a associação
-});
+
 // // create a table in database
 // Shift.sync()
 export default Operator;
