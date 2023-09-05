@@ -2,7 +2,6 @@
 import Period from '../models/Period.js'
 import Operator from '../models/Operator.js'
 import Machine from '../models/Machine.js'
-import Production from '../models/Production.js'
 import Time from '../models/Time.js'
 import ProductionData from '../models/ProductionData.js'
 
