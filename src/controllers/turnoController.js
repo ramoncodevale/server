@@ -7,7 +7,7 @@ import Time from '../models/Time.js'
 import ProductionData from '../models/ProductionData.js'
 
 // Função que retorna o resultado desejado
-export async function listarRegistrosProducao() {
+export async function listarRegistrosProducao(req, res) {
   try {
     // Consulta para obter os dados principais
     const productionData = await ProductionData.findOne({
