@@ -115,3 +115,26 @@ export async function listarPeriodo(req, res) {
     res.status(500).json({ error: 'Erro ao listar os periodos.' });
   }
 }
+
+
+// Este é um exemplo de controller para cadastrar dados de produção
+export async function cadastrarProducao(req, res) {
+  try {
+    // Extraia os dados da requisição do corpo (body)
+    const { quantidade, perda, comentario } = req.body;
+
+    // Crie um novo registro de produção no banco de dados
+    const novaProducao = await Production.create({
+      quantidade,
+      perda,
+      comentario,
+    });
+
+    // Envie uma resposta de sucesso com o novo registro criado
+    return res.status(201).json(novaProducao);
+  } catch (error) {
+    // Se ocorrer um erro, envie uma resposta de erro com uma mensagem apropriada
+    console.error('Erro ao cadastrar produção:', error);
+    return res.status(500).json({ error: 'Erro ao cadastrar produção' });
+  }
+}
