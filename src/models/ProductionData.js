@@ -38,10 +38,24 @@ const ProductionData = db.define('registroProducaos', {
   timestamps: false, // Esta opção remove os campos de timestamps
 });
 
-// Defina as relações entre os modelos
-ProductionData.belongsTo(Period);
-ProductionData.belongsTo(Operator);
-ProductionData.belongsTo(Machine);
+
+ProductionData.belongsTo(Period, {
+  foreignKey: 'periodoId',
+  as: 'periodo',
+});
+
+ProductionData.belongsTo(Machine, {
+  foreignKey: 'maquinaId', 
+  as: 'maquina',
+});
+
+
+ProductionData.belongsTo(Operator, {
+  foreignKey: 'operadorId', 
+  as: 'operador',
+});
+
+
 ProductionData.hasMany(Production);
 
 // ProductionData.sync()
