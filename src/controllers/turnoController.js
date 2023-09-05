@@ -6,12 +6,6 @@ import Production from '../models/Production.js'
 import Time from '../models/Time.js'
 import ProductionData from '../models/ProductionData.js'
 
-import ProductionData from "./ProductionData.js";
-import Period from "./Period.js";
-import Operator from "./Operator.js";
-import Machine from "./Machine.js";
-import Time from "./Time.js";
-
 // Função que retorna o resultado desejado
 export async function listarRegistrosProducao() {
   try {
