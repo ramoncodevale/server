@@ -39,24 +39,10 @@ const ProductionData = db.define('registroProducaos', {
 });
 
 
-ProductionData.belongsTo(Period, {
-  foreignKey: 'periodoId',
-  as: 'periodo',
-});
-
-ProductionData.belongsTo(Machine, {
-  foreignKey: 'maquinaId', 
-  as: 'maquina',
-});
-
-
-ProductionData.belongsTo(Operator, {
-  foreignKey: 'operadorId', 
-  as: 'operador',
-});
-
-
-ProductionData.hasMany(Production);
+ProductionData.belongsTo(Operator, { foreignKey: 'operadorId', alias: 'productionOperator' });
+ProductionData.belongsTo(Machine, { foreignKey: 'maquinaId' });
+ProductionData.belongsTo(Period, { foreignKey: 'periodoId' });
+ProductionData.hasMany(Production, { foreignKey: 'registroProducaoId' });
 
 // ProductionData.sync()
 
