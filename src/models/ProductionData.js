@@ -39,7 +39,7 @@ const ProductionData = db.define('registroProducaos', {
 });
 
 
-ProductionData.belongsTo(Operator, { foreignKey: 'operadorId', alias: 'productionOperator' });
+ProductionData.belongsTo(Operator, { foreignKey: 'operadorId' });
 ProductionData.belongsTo(Machine, { foreignKey: 'maquinaId' });
 ProductionData.belongsTo(Period, { foreignKey: 'periodoId' });
 ProductionData.hasMany(Production, { foreignKey: 'registroProducaoId' });
