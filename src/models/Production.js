@@ -22,6 +22,9 @@ const Production =  db.define('producao', {
   comentario: {
     type: Sequelize.STRING,
   },
+  metaHora: {
+    type: Sequelize.STRING,
+  }
 },  {
   timestamps: false, // Esta opção remove os campos de timestamps
 });

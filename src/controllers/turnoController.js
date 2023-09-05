@@ -103,7 +103,7 @@ export async function saveProductionData(req, res) {
 
 export async function cadastrarProducoes(req, res) {
   try {
-    const { perda, comentario, quantidade, operadorId } = req.body;
+    const { perda, comentario, quantidade, operadorId, metaHora } = req.body;
 
     // Crie um novo registro de ProductionData no banco de dados
     const newProductionData = await Production.create({
@@ -111,6 +111,7 @@ export async function cadastrarProducoes(req, res) {
       operadorId,
       comentario,
       quantidade,
+      metaHora
     });
 
     // Envie uma resposta de sucesso
