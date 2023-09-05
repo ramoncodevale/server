@@ -59,9 +59,9 @@ export async function listarRegistrosProducao(req, res) {
     };
 
     // Envia a resposta HTTP com o objeto JSON
-    res.json(result);
+    res.status(200).json(result);
   } catch (error) {
-    // Trate os erros adequadamente
+    console.error(error); 
     res.status(500).json({ error: "Erro ao buscar os dados de produção" });
   }
 }
@@ -100,6 +100,28 @@ export async function saveProductionData(req, res) {
 }
 
 
+
+export async function cadastrarProducoes(req, res) {
+  try {
+    const { perda, comentario, quantidade, operadorId } = req.body;
+
+    // Crie um novo registro de ProductionData no banco de dados
+    const newProductionData = await Production.create({
+      perda,
+      operadorId,
+      comentario,
+      quantidade,
+    });
+
+    // Envie uma resposta de sucesso
+    res.status(201).json({ message: "Dados de produção salvos com sucesso" });
+  } catch (error) {
+    // Trate os erros adequadamente
+    console.error(error);
+    res.status(500).json({ error: "Erro ao salvar os dados de produção" });
+  }
+}
+
 // Controller para cadastrar um operador
 export async function cadastrarOperador(req, res) {
   try {
@@ -129,7 +151,7 @@ export async function listarOperador(req, res) {
     res.status(500).json({ error: 'Erro ao listar os operadores.' });
   }
 }
-
+ 
 
 // Controller para cadastrar um operador
 export async function cadastrarMaquina(req, res) {

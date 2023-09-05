@@ -1,5 +1,8 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
+ 
+
+import Operator from "./Operator.js";
 
 import Time from "./Time.js";
 
@@ -24,5 +27,7 @@ const Production =  db.define('producao', {
 });
 
 Production.belongsTo(Time);
+Production.belongsTo(Operator, { foreignKey: 'operadorId' });
+
 
 export default Production
