@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
-import ProductionData from "./ProductionData.js";
 
 const Period = db.define('periodos', {
     id: {
