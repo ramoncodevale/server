@@ -16,5 +16,6 @@ router.post('/cadastrar/periodo', cadastrarPeriodo)
 router.get('/listar/periodo', listarPeriodo)
 
 router.post('/cadastrar/producao', saveProductionData)
+router.get('/listar/turno', listarRegistrosProducao)
 
 export default router;
