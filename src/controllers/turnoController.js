@@ -6,10 +6,17 @@ import Production from '../models/Production.js'
 import Time from '../models/Time.js'
 import ProductionData from '../models/ProductionData.js'
 
-// Controller para listar todos os registros de produção
-export async function listarRegistrosProducao(req, res) {
+import ProductionData from "./ProductionData.js";
+import Period from "./Period.js";
+import Operator from "./Operator.js";
+import Machine from "./Machine.js";
+import Time from "./Time.js";
+
+// Função que retorna o resultado desejado
+export async function listarRegistrosProducao() {
   try {
-    const registros = await ProductionData.findAll({
+    // Consulta para obter os dados principais
+    const productionData = await ProductionData.findOne({
       include: [
         { model: Period },
         { model: Operator },
@@ -20,12 +27,84 @@ export async function listarRegistrosProducao(req, res) {
         },
       ],
     });
-    res.json(registros);
+
+    // Monta o objeto JSON com base nos resultados
+    const result = {
+      id: productionData.id,
+      periodo: {
+        id: productionData.Period.id,
+        turno: productionData.Period.turno,
+      },
+      ger: productionData.ger,
+      planejado: productionData.planejado,
+      produzido: productionData.produzido,
+      qualidade: productionData.qualidade,
+      she: productionData.she,
+      desperdicioEmbalagem: productionData.desperdicioEmbalagem,
+      desperdicioCafe: productionData.desperdicioCafe,
+      operador: {
+        id: productionData.Operator.id,
+        nome: productionData.Operator.nome,
+        sobreNome: productionData.Operator.sobreNome,
+      },
+      maquina: {
+        id: productionData.Machine.id,
+        nome: productionData.Machine.nome,
+        metaHora: productionData.Machine.metaHora,
+      },
+      producoes: productionData.Production.map((production) => ({
+        id: production.id,
+        quantidade: production.quantidade,
+        perda: production.perda,
+        comentario: production.comentario,
+        horario: {
+          id: production.Time.id,
+          faixa: production.Time.faixa,
+        },
+      })),
+    };
+
+    // Envia a resposta HTTP com o objeto JSON
+    res.json(result);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar registros de produção.' });
+    // Trate os erros adequadamente
+    res.status(500).json({ error: "Erro ao buscar os dados de produção" });
   }
 }
+
+export async function saveProductionData(req, res) {
+  try {
+    // Obtenha os dados do corpo da solicitação HTTP
+    const { periodoId, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId, producoes } = req.body;
+
+    // Crie um novo registro de ProductionData no banco de dados
+    const newProductionData = await ProductionData.create({
+      periodoId,
+      ger,
+      planejado,
+      produzido,
+      qualidade,
+      she,
+      desperdicioEmbalagem,
+      desperdicioCafe,
+      operadorId,
+      maquinaId,
+    });
+
+    // Crie registros de Production associados, se necessário
+    if (producoes && producoes.length > 0) {
+      await newProductionData.createProductions(producoes);
+    }
+
+    // Envie uma resposta de sucesso
+    res.status(201).json({ message: "Dados de produção salvos com sucesso" });
+  } catch (error) {
+    // Trate os erros adequadamente
+    console.error(error);
+    res.status(500).json({ error: "Erro ao salvar os dados de produção" });
+  }
+}
+
 
 // Controller para cadastrar um operador
 export async function cadastrarOperador(req, res) {
@@ -116,25 +195,3 @@ export async function listarPeriodo(req, res) {
   }
 }
 
-
-// Este é um exemplo de controller para cadastrar dados de produção
-export async function cadastrarProducao(req, res) {
-  try {
-    // Extraia os dados da requisição do corpo (body)
-    const { quantidade, perda, comentario } = req.body;
-
-    // Crie um novo registro de produção no banco de dados
-    const novaProducao = await Production.create({
-      quantidade,
-      perda,
-      comentario,
-    });
-
-    // Envie uma resposta de sucesso com o novo registro criado
-    return res.status(201).json(novaProducao);
-  } catch (error) {
-    // Se ocorrer um erro, envie uma resposta de erro com uma mensagem apropriada
-    console.error('Erro ao cadastrar produção:', error);
-    return res.status(500).json({ error: 'Erro ao cadastrar produção' });
-  }
-}
