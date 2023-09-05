@@ -36,6 +36,15 @@ const ProductionData = db.define('registroProducaos', {
   desperdicioCafe: {
     type: Sequelize.INTEGER,
   },
+  quantidade: {
+    type: Sequelize.STRING,
+  },
+  perda: {
+    type: Sequelize.INTEGER,
+  },
+  comentario: {
+    type: Sequelize.STRING,
+  }
 },  {
   timestamps: false, // Esta opção remove os campos de timestamps
 });

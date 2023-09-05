@@ -68,7 +68,7 @@ export async function listarRegistrosProducao(req, res) {
 export async function saveProductionData(req, res) {
   try {
     // Obtenha os dados do corpo da solicitação HTTP
-    const { periodoId, data, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId } = req.body;
+    const { periodoId, data, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId, quantidade,perda, comentario } = req.body;
 
     const newProductionData = await ProductionData.create({
       periodoId,
@@ -81,7 +81,8 @@ export async function saveProductionData(req, res) {
       desperdicioEmbalagem,
       desperdicioCafe,
       comentario,
-      metaHora,
+      perda,
+      quantidade,
       produzido,
       operadorId,
       maquinaId,
