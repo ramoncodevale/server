@@ -3,75 +3,23 @@ import Period from '../models/Period.js'
 import Operator from '../models/Operator.js'
 import Machine from '../models/Machine.js'
 import Time from '../models/Time.js'
-import ProductionData from '../models/ProductionData.js'
+import Production from '../models/Production.js'
+import ProductionRegister from '../models/ProductionRegister.js'
+import ProductionAllRegister from '../models/ProductionAllRegister.js'
 
-// Função que retorna o resultado desejado
-export async function listarRegistrosProducao(req, res) {
+export async function salvarProducao(req,res) {
   try {
-    // Consulta para obter os dados principais
-    const productionData = await ProductionData.findOne({
-      include: [
-        { model: Period },
-        { model: Operator },
-        { model: Machine },
-        {
-          model: Production,
-          include: [{ model: Time }],
-        },
-      ],
-    });
-
-    // Monta o objeto JSON com base nos resultados
-    const result = {
-      id: productionData.id,
-      periodo: {
-        id: productionData.Period.id,
-        turno: productionData.Period.turno,
-      },
-      ger: productionData.ger,
-      planejado: productionData.planejado,
-      produzido: productionData.produzido,
-      qualidade: productionData.qualidade,
-      she: productionData.she,
-      desperdicioEmbalagem: productionData.desperdicioEmbalagem,
-      desperdicioCafe: productionData.desperdicioCafe,
-      operador: {
-        id: productionData.Operator.id,
-        nome: productionData.Operator.nome,
-        sobreNome: productionData.Operator.sobreNome,
-      },
-      maquina: {
-        id: productionData.Machine.id,
-        nome: productionData.Machine.nome,
-        metaHora: productionData.Machine.metaHora,
-      },
-      producoes: productionData.Production.map((production) => ({
-        id: production.id,
-        quantidade: production.quantidade,
-        perda: production.perda,
-        comentario: production.comentario,
-        horario: {
-          id: production.Time.id,
-          faixa: production.Time.faixa,
-        },
-      })),
-    };
-
-    // Envia a resposta HTTP com o objeto JSON
-    res.status(200).json(result);
+    const { quantidade, perda, comentario, horario_id } = req.body;
+    const producao = await Production.create({ quantidade, perda, comentario, horario_id });
+    res.status(201).json(producao);
   } catch (error) {
-    console.error(error); 
-    res.status(500).json({ error: "Erro ao buscar os dados de produção" });
+    res.status(500).json({ error: 'Erro ao criar registro de produção' });
   }
 }
 
-export async function saveProductionData(req, res) {
+export async function registrarProducao(req,res) {
   try {
-    // Obtenha os dados do corpo da solicitação HTTP
-    const { periodoId, data, ger, planejado, produzido, qualidade, she, desperdicioEmbalagem, desperdicioCafe, operadorId, maquinaId, quantidade,perda, comentario } = req.body;
-
-    const newProductionData = await ProductionData.create({
-      periodoId,
+    const {
       data,
       ger,
       planejado,
@@ -80,21 +28,40 @@ export async function saveProductionData(req, res) {
       she,
       desperdicioEmbalagem,
       desperdicioCafe,
-      comentario,
-      perda,
-      quantidade,
+      periodo_id,
+      operador_id,
+      maquina_id,
+    } = req.body;
+    const registroProducao = await ProductionRegister.create({
+      data,
+      ger,
+      planejado,
       produzido,
-      operadorId,
-      maquinaId,
+      qualidade,
+      she,
+      desperdicioEmbalagem,
+      desperdicioCafe,
+      periodo_id,
+      operador_id,
+      maquina_id,
     });
-
-
-    // Envie uma resposta de sucesso
-    res.status(201).json(newProductionData);
+    res.status(201).json(registroProducao);
   } catch (error) {
-    // Trate os erros adequadamente
-    console.error(error);
-    res.status(500).json({ error: "Erro ao salvar os dados de produção" });
+    res.status(500).json({ error: 'Erro ao criar registro de produção' });
+  }
+}
+
+export async function  associarProducao(req,res) {
+  
+  try {
+    const { producao_id, registro_producao_id } = req.body;
+    const producaoRegistroProducao = await ProductionAllRegister.create({
+      producao_id,
+      registro_producao_id,
+    });
+    res.status(201).json(producaoRegistroProducao);
+  } catch (error) {
+    res.status(500).json({ error: 'Erro ao associar produção a registro de produção' });
   }
 }
 
