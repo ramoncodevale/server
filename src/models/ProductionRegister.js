@@ -1,7 +1,7 @@
 import { Sequelize } from 'sequelize';
 import db from './db.js'
 
-const ProductionRegister = db.define('registro_producao', {
+const ProductionRegister = db.define('registros', {
   id: {
     type: Sequelize.INTEGER,
     primaryKey: true,

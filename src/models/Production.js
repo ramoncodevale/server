@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
 
-const Production = db.define('producao', {
+const Production = db.define('producoes', {
     id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
