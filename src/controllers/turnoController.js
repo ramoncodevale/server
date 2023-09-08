@@ -180,3 +180,21 @@ export async function cadastrarProducaoRegistro(req, res) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
+export async function listarProducoes(req, res) {
+  try {
+    // Busque todos os registros de Producao e ProducaoRegistro no banco de dados
+    const producoes = await ProductionRegister.findAll({});
+    const producoesRegistro = await Production.findAll({});
+
+    res.status(200).json({
+      producoes,
+      producoesRegistro,
+    });
+  } catch (error) {
+    console.error('Erro ao listar registros de Produção e Produção de Registro:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
+
+
