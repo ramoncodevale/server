@@ -17,6 +17,29 @@ export async function listarHorario(req, res) {
   }
 }
 
+export async function listarHorarioPeriodo(req,res) {
+try {
+  const { periodoId } = req.params;
+
+  // Verifique se o turno com o ID fornecido existe
+  const turno = await Period.findByPk(periodoId);
+
+  if (!turno) {
+    return res.status(404).json({ error: 'Turno não encontrado.' });
+  }
+
+  // Liste os horários associados a esse turno
+  const horarios = await Time.findAll({
+    where: { PeriodoId: periodoId },
+  });
+
+  res.status(200).json(horarios);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'Erro ao listar os horários por turno.' });
+}
+}
+
 export async function salvarInformacoes(req, res) {
   try {
     // Dados do corpo da requisição
