@@ -1,7 +1,7 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
 
-const Time= db.define('Horario', {
+const Time= db.define('horario', {
   id: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
