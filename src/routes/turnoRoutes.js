@@ -1,6 +1,6 @@
 import express from 'express';
 
-import {  cadastrarOperador, cadastrarMaquina, cadastrarPeriodo, listarMaquina, listarOperador, listarPeriodo, listarHorario, listarHorarioPeriodo, cadastrarProducao  } from '../controllers/turnoController.js'
+import {  cadastrarOperador, cadastrarMaquina, cadastrarPeriodo, listarMaquina, listarOperador, listarPeriodo, listarHorario, listarHorarioPeriodo, cadastrarProducao,  cadastrarProducaoRegistro  } from '../controllers/turnoController.js'
 
 
 const router = express();
@@ -20,6 +20,7 @@ router.post('/cadastrar/periodo', cadastrarPeriodo)
 router.get('/listar/periodo', listarPeriodo)
 
 router.post('/cadastrar/producao', cadastrarProducao)
+router.post('/cadastrar/turno',  cadastrarProducaoRegistro)
 
 
 export default router;

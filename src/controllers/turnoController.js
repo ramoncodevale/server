@@ -156,3 +156,27 @@ export async function cadastrarProducao(req, res) {
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 }
+
+export async function cadastrarProducaoRegistro(req, res) {
+  try {
+    const {
+      horarioId,
+      comentario,
+      quantidade,
+      perda, 
+    } = req.body;
+
+    // Create the Production Register record in the database
+    const productionRegister = await Production.create({
+      horarioId,
+      comentario,
+      quantidade,
+      perda, 
+    });
+
+    return res.status(201).json(productionRegister);
+  } catch (error) {
+    console.error('Error creating Production Register:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

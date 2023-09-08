@@ -1,8 +1,6 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
-import Machine from "./Machine.js";
-import Operator from "./Operator.js";
-import Period from "./Period.js";
+import Time from "./Time.js";
 
 const Production = db.define('producoes', {
     id: {
@@ -17,14 +15,18 @@ const Production = db.define('producoes', {
      comentario: {
       type: Sequelize.STRING,
      },
+     perda: {
+      type: Sequelize.STRING,
+     }, 
+     horarioId: {
+      type: Sequelize.INTEGER,
+     }
 },{
   timestamps: false, // Esta opção remove os campos de timestamps
 });
 
+Production.belongsTo(Time, { foreignKey: 'horarioId' });
 
-Production.belongsTo(Period)
-Production.belongsTo(Operator)
-Production.belongsTo(Machine)
 // // create a table in database
 // Shift.sync()
 export default Production;
