@@ -20,6 +20,8 @@ const ProductionRegister = db.define('registros', {
     type: Sequelize.INTEGER
   },
  
+}, {
+  timestamps: false
 });
 
 ProductionRegister.belongsTo(Period, { foreignKey: 'periodoId' });
