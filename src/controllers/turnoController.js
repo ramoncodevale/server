@@ -5,20 +5,11 @@ import Machine from '../models/Machine.js'
 import Time from '../models/Time.js'
 import Production from '../models/Production.js'
 import ProductionRegister from '../models/ProductionRegister.js'
-import ProductionAllRegister from '../models/ProductionAllRegister.js'
 
-export async function salvarProducao(req,res) {
-  try {
-    const { quantidade, perda, comentario, horario_id } = req.body;
-    const producao = await Production.create({ quantidade, perda, comentario, horario_id });
-    res.status(201).json(producao);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar registro de produção' });
-  }
-}
 
-export async function registrarProducao(req,res) {
+export async function salvarInformacoes(req, res) {
   try {
+    // Dados do corpo da requisição
     const {
       data,
       ger,
@@ -28,11 +19,14 @@ export async function registrarProducao(req,res) {
       she,
       desperdicioEmbalagem,
       desperdicioCafe,
-      periodo_id,
-      operador_id,
-      maquina_id,
+      periodo,
+      operador,
+      maquina,
+      producoes,
     } = req.body;
-    const registroProducao = await ProductionRegister.create({
+
+    // Crie o objeto de dados
+    const dataObj = await ProductionRegister.create({
       data,
       ger,
       planejado,
@@ -41,29 +35,36 @@ export async function registrarProducao(req,res) {
       she,
       desperdicioEmbalagem,
       desperdicioCafe,
-      periodo_id,
-      operador_id,
-      maquina_id,
+      PeriodoId: periodo.id,
+      OperadorId: operador.id,
+      MaquinaId: maquina.id,
     });
-    res.status(201).json(registroProducao);
+
+    // Crie as produções associadas à data
+    for (const producao of producoes) {
+      const { quantidade, perda, comentario, horario } = producao;
+
+      // Encontre ou crie um horário
+      const [horarioObj, createdHorario] = await Time.findOrCreate({
+        where: { faixa: horario.faixa },
+      });
+
+      await Production.create({
+        quantidade,
+        perda,
+        comentario,
+        HorarioId: horarioObj.id,
+        DataId: dataObj.id,
+      });
+    }
+
+    res.status(201).json({ message: 'Informações salvas com sucesso!' });
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar registro de produção' });
+    console.error('Erro ao salvar informações:', error);
+    res.status(500).json({ error: 'Erro ao salvar informações.' });
   }
 }
 
-export async function  associarProducao(req,res) {
-  
-  try {
-    const { producao_id, registro_producao_id } = req.body;
-    const producaoRegistroProducao = await ProductionAllRegister.create({
-      producao_id,
-      registro_producao_id,
-    });
-    res.status(201).json(producaoRegistroProducao);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao associar produção a registro de produção' });
-  }
-}
 
 // Controller para cadastrar um operador
 export async function cadastrarOperador(req, res) {

@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import db from './db.js'
+import Time from './Time.js'
 
 const ProductionRegister = db.define('registros', {
   id: {
@@ -31,27 +32,9 @@ const ProductionRegister = db.define('registros', {
   desperdicioCafe: {
     type: Sequelize.INTEGER
   },
-  periodo_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'period', // Nome da tabela referenciada
-      key: 'id' // Coluna da tabela referenciada
-    }
-  },
-  operador_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'operator', // Nome da tabela referenciada
-      key: 'id' // Coluna da tabela referenciada
-    }
-  },
-  maquina_id: {
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'machine', // Nome da tabela referenciada
-      key: 'id' // Coluna da tabela referenciada
-    }
-  }
+ 
 });
+
+ProductionRegister.belongsTo(Time)
 
 export default ProductionRegister
