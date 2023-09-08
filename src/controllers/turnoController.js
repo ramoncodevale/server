@@ -35,9 +35,9 @@ export async function salvarInformacoes(req, res) {
       she,
       desperdicioEmbalagem,
       desperdicioCafe,
-      PeriodoId: periodo.id,
-      OperadorId: operador.id,
-      MaquinaId: maquina.id,
+      PeriodoId: periodoObj.id,
+      OperadorId: operadorObj.id,
+      MaquinaId: maquinaObj.id,
     });
 
     // Crie as produções associadas à data
