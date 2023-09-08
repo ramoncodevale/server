@@ -40,65 +40,6 @@ try {
 }
 }
 
-export async function salvarInformacoes(req, res) {
-  try {
-    // Dados do corpo da requisição
-    const {
-      data,
-      ger,
-      planejado,
-      produzido,
-      qualidade,
-      she,
-      desperdicioEmbalagem,
-      desperdicioCafe,
-      periodo,
-      operador,
-      maquina,
-      producoes,
-    } = req.body;
-
-    // Crie o objeto de dados
-    const dataObj = await ProductionRegister.create({
-      data,
-      ger,
-      planejado,
-      produzido,
-      qualidade,
-      she,
-      desperdicioEmbalagem,
-      desperdicioCafe,
-      PeriodoId: periodoObj.id,
-      OperadorId: operadorObj.id,
-      MaquinaId: maquinaObj.id,
-    });
-
-    // Crie as produções associadas à data
-    for (const producao of producoes) {
-      const { quantidade, perda, comentario, horario } = producao;
-
-      // Encontre ou crie um horário
-      const [horarioObj, createdHorario] = await Time.findOrCreate({
-        where: { faixa: horario.faixa },
-      });
-
-      await Production.create({
-        quantidade,
-        perda,
-        comentario,
-        HorarioId: horarioObj.id,
-        DataId: dataObj.id,
-      });
-    }
-
-    res.status(201).json({ message: 'Informações salvas com sucesso!' });
-  } catch (error) {
-    console.error('Erro ao salvar informações:', error);
-    res.status(500).json({ error: 'Erro ao salvar informações.' });
-  }
-}
-
-
 // Controller para cadastrar um operador
 export async function cadastrarOperador(req, res) {
   try {
@@ -188,3 +129,30 @@ export async function listarPeriodo(req, res) {
   }
 }
 
+export async function cadastrarProducao(req, res) {
+  try {
+    const {
+      data,
+      ger,
+      planejado,
+      periodoId, 
+      operadorId, 
+      maquinaId,  
+    } = req.body;
+
+    // Create the Production Register record in the database
+    const productionRegister = await ProductionRegister.create({
+      data,
+      ger,
+      planejado,
+      periodoId,
+      operadorId,
+      maquinaId,
+    });
+
+    return res.status(201).json(productionRegister);
+  } catch (error) {
+    console.error('Error creating Production Register:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}

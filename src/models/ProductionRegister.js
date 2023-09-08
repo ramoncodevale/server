@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize';
 import db from './db.js'
-import Time from './Time.js'
+import Operator from './Operator.js';
+import Machine from './Machine.js';
+import Period from './Period.js';
 
 const ProductionRegister = db.define('registros', {
   id: {
@@ -17,24 +19,12 @@ const ProductionRegister = db.define('registros', {
   planejado: {
     type: Sequelize.INTEGER
   },
-  produzido: {
-    type: Sequelize.INTEGER
-  },
-  qualidade: {
-    type: Sequelize.BOOLEAN
-  },
-  she: {
-    type: Sequelize.BOOLEAN
-  },
-  desperdicioEmbalagem: {
-    type: Sequelize.INTEGER
-  },
-  desperdicioCafe: {
-    type: Sequelize.INTEGER
-  },
  
 });
 
-ProductionRegister.belongsTo(Time)
+ProductionRegister.belongsTo(Period, { foreignKey: 'periodoId' });
+ProductionRegister.belongsTo(Operator, { foreignKey: 'operadorId' });
+ProductionRegister.belongsTo(Machine, { foreignKey: 'maquinaId' });
+
 
 export default ProductionRegister
