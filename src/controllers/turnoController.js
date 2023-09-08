@@ -7,6 +7,16 @@ import Production from '../models/Production.js'
 import ProductionRegister from '../models/ProductionRegister.js'
 
 
+export async function listarHorario(req, res) {
+  try {
+    const horario = await Time.findAll({})
+    res.status(201).json(horario)
+    console.log(horario)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export async function salvarInformacoes(req, res) {
   try {
     // Dados do corpo da requisição
