@@ -193,12 +193,12 @@ export async function listarProducoes(req, res) {
         },
         {
           model: Machine,
-          as: 'maquinas',
+          // as: 'maquinas',
           attributes: ['nome', 'metaHora']
         },
         {
           model: Period,
-          as: 'periodos',
+          // as: 'periodos',
           attributes: ['turno']
         }
       ],
@@ -207,7 +207,7 @@ export async function listarProducoes(req, res) {
       include: [
         {
           model: Time,
-          as: 'horarios',
+          // as: 'horarios',
           attributes: ['faixa']
         }
       ]
