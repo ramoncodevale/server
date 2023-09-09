@@ -234,22 +234,22 @@ export async function listarProducoesPeriodo(req, res) {
       },
       include: [
         {
-          model: Operator,
-          attributes: ['nome', 'sobrenome'],
+          model: Operator, 
+          // as: 'operadores', 
+          attributes: ['nome', 'sobrenome'], 
         },
         {
           model: Machine,
-          attributes: ['nome', 'metaHora'],
+          // as: 'maquinas',
+          attributes: ['nome', 'metaHora']
         },
         {
           model: Period,
-          attributes: ['turno'],
-        },
-        {
-          model: Time,
-          attributes: ['faixa'],
-        },
+          // as: 'periodos',
+          attributes: ['turno']
+        }
       ],
+     
     });
     const producoesRegistro = await Production.findAll({
       include: [
