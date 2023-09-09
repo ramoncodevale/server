@@ -23,6 +23,6 @@ router.post('/cadastrar/producao', cadastrarProducao)
 router.post('/cadastrar/turno',  cadastrarProducaoRegistro)
 
 router.get('/listar/turno', listarProducoes)
-router.get('/listar/turno', listarProducoesPeriodo)
+router.get('/listar/turno/:periodoId', listarProducoesPeriodo)
 
 export default router;
