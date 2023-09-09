@@ -184,8 +184,34 @@ export async function cadastrarProducaoRegistro(req, res) {
 export async function listarProducoes(req, res) {
   try {
     // Busque todos os registros de Producao e ProducaoRegistro no banco de dados
-    const producoes = await ProductionRegister.findAll({});
-    const producoesRegistro = await Production.findAll({});
+    const producoes = await ProductionRegister.findAll({
+      include: [
+        {
+          model: Operator, 
+          as: 'Operador', 
+          attributes: ['nome', 'sobrenome'], 
+        },
+        {
+          model: Machine,
+          as: 'Maquina',
+          attributes: ['nome', 'metaHora']
+        },
+        {
+          model: Period,
+          as: 'Periodo',
+          attributes: ['turno']
+        }
+      ],
+    });
+    const producoesRegistro = await Production.findAll({
+      include: [
+        {
+          model: Time,
+          as: 'Horario',
+          attributes: ['faixa']
+        }
+      ]
+    });
 
     res.status(200).json({
       producoes,
@@ -196,5 +222,6 @@ export async function listarProducoes(req, res) {
     res.status(500).json({ error: 'Erro interno do servidor' });
   }
 }
+
 
 
