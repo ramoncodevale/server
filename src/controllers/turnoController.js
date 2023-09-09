@@ -188,7 +188,7 @@ export async function listarProducoes(req, res) {
       include: [
         {
           model: Operator, 
-          as: 'operadores', 
+          // as: 'operadores', 
           attributes: ['nome', 'sobrenome'], 
         },
         {
