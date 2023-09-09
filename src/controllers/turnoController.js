@@ -223,5 +223,51 @@ export async function listarProducoes(req, res) {
   }
 }
 
+export async function listarProducoesPeriodo(req, res) {
+  try {
+    const { periodoId } = req.params;
 
+    // Busque todas as produções de registro para o período especificado
+    const producoes = await ProductionRegister.findAll({
+      where: {
+        periodoId: periodoId,
+      },
+      include: [
+        {
+          model: Operator,
+          attributes: ['nome', 'sobrenome'],
+        },
+        {
+          model: Machine,
+          attributes: ['nome', 'metaHora'],
+        },
+        {
+          model: Period,
+          attributes: ['turno'],
+        },
+        {
+          model: Time,
+          attributes: ['faixa'],
+        },
+      ],
+    });
+    const producoesRegistro = await Production.findAll({
+      include: [
+        {
+          model: Time,
+          // as: 'horarios',
+          attributes: ['faixa']
+        }
+      ]
+    });
 
+    if (!producoesRegistro || producoesRegistro.length === 0) {
+      return res.status(404).json({ error: 'Nenhuma produção encontrada para o período especificado.' });
+    }
+
+    res.status(200).json({producoes, producoesRegistro});
+  } catch (error) {
+    console.error('Erro ao listar produções pelo período:', error);
+    res.status(500).json({ error: 'Erro interno do servidor' });
+  }
+}
