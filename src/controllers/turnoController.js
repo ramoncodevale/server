@@ -188,17 +188,17 @@ export async function listarProducoes(req, res) {
       include: [
         {
           model: Operator, 
-          as: 'Operador', 
+          as: 'operadores', 
           attributes: ['nome', 'sobrenome'], 
         },
         {
           model: Machine,
-          as: 'Maquina',
+          as: 'maquinas',
           attributes: ['nome', 'metaHora']
         },
         {
           model: Period,
-          as: 'Periodo',
+          as: 'periodos',
           attributes: ['turno']
         }
       ],
@@ -207,7 +207,7 @@ export async function listarProducoes(req, res) {
       include: [
         {
           model: Time,
-          as: 'Horario',
+          as: 'horarios',
           attributes: ['faixa']
         }
       ]
