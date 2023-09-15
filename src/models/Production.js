@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import db from "./db.js";
 import Time from "./Time.js";
+import Operator from "./Operator.js";
 
 const Production = db.define('producoes', {
     id: {
@@ -26,6 +27,8 @@ const Production = db.define('producoes', {
 });
 
 Production.belongsTo(Time, { foreignKey: 'horarioId' });
+Production.belongsTo(Operator, { foreignKey: 'operadorId' });
+
 
 // // create a table in database
 // Shift.sync()

@@ -164,6 +164,7 @@ export async function cadastrarProducaoRegistro(req, res) {
       comentario,
       quantidade,
       perda, 
+      operadorId,
     } = req.body;
 
     // Create the Production Register record in the database
@@ -172,6 +173,7 @@ export async function cadastrarProducaoRegistro(req, res) {
       comentario,
       quantidade,
       perda, 
+      operadorId,
     });
 
     return res.status(201).json(productionRegister);
