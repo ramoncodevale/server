@@ -17,6 +17,8 @@ const Operator = db.define('operadores', {
       type: Sequelize.STRING,
       allowNull: true,
     },
+}, {
+  timestamps: false, // Esta opção remove os campos de timestamps
 });
 
 

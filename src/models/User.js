@@ -30,6 +30,8 @@ const User = db.define('usuarios', {
         type: Sequelize.STRING,
         allowNull: false
     },
+},  {
+  timestamps: false, // Esta opção remove os campos de timestamps
 });
 
 // User.hasMany(Shift, { foreignKey: 'userId' });
