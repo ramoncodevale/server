@@ -15,7 +15,7 @@ app.use(session({
 
 app.use(cors());
 
-app.use('*', express.static( resolve( __dirname, './build' ) ) ) 
+// app.use('*', express.static( resolve( __dirname, './build' ) ) ) 
 
 // Routes
 import loginRoutes from './src/routes/loginRoutes.js';
