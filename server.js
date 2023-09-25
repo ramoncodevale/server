@@ -15,8 +15,7 @@ app.use(session({
 
 app.use(cors());
 
-// Configuration to allow the use of images
-app.use(express.static(new URL('public', import.meta.url).pathname));
+app.use('*', express.static( resolve( __dirname, './build' ) ) ) 
 
 // Routes
 import loginRoutes from './src/routes/loginRoutes.js';
